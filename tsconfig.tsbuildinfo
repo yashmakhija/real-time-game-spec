@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/controller/roomcontroller.ts","./src/controller/usercontroller.ts","./src/routes/routes.ts"],"version":"5.6.2"}
