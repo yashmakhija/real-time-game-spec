@@ -11,6 +11,7 @@
   - `password`: The user's chosen password
 - **Response**:
   - `sessionToken`: The session token for the user
+  - `userId`: The user id
 
 ---
 
