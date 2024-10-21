@@ -1,40 +1,91 @@
-WebSocket Server Specification
-Events
-Join Room
 
-Event: join
-Request Data:
+## WebSocket Server Specification
 
-roomId: The ID of the room the user wants to join
+### Events
 
+---
 
-Response:
+#### **Join Room**
+```
+{
+    event: "join",
+    data: {
+        roomId: string
+    }
+}
+```
+- **Event**: `join`
+- **Request Data**:
+  - `roomId`: The ID of the room the user wants to join
 
-ack event with the user's spawn position
+- **Response**:
+Acknowledgement (`ack`) event with the user's spawn position
+```
+{
+    event: "ack",
+    data: {
+        x: number,
+        y: number
+    }
+}
+```
+---
 
+#### **Update Position**
 
+- **Event**: `position`
+- **Request Data**:
+```
+{
+    event: "position",
+    data: {
+        x: number,
+        y: number
+    }
+}
+```
+  - `x`: The new X coordinate of the user's position
+  - `y`: The new Y coordinate of the user's position
 
-Update Position
+- **Responses**:
+  - **If valid position**: Broadcast the new position to other users in the room
+  ```
+    {
+        event: "position-update",
+        data: {
+            userId: string,
+            x: number,
+            y: number
+        }
+    }
+  ```
+  - **If invalid position**: Send a `position-update` event with the user's original position
+  ```
+  {
+      event: "position-update",
+      data: {
+          userId: string,
+          x: number,
+          y: number
+      }
+  }
+  ```
 
-Event: position
-Request Data:
+---
 
-x: The new X coordinate of the user's position
-y: The new Y coordinate of the user's position
+#### **Broadcast Position Update**
 
-
-Responses:
-
-If valid position: Broadcast the new position to other users in the room
-If invalid position: position-update event with the user's original position
-
-
-
-Broadcast Position Update
-
-Event: Broadcasted to all users in the room
-Data:
-
-userId: The ID of the user whose position has been updated
-x: The new X coordinate of the user's position
-y: The new Y coordinate of the user's position
+- **Event**: Broadcasted to all users in the room
+- **Data**:
+  - `userId`: The ID of the user whose position has been updated
+  - `x`: The new X coordinate of the user's position
+  - `y`: The new Y coordinate of the user's position
+```
+{
+    event: "position-update",
+    data: {
+        userId: string,
+        x: number,
+        y: number
+    }
+}```
