@@ -10,7 +10,8 @@
 {
     event: "join",
     data: {
-        roomId: string
+        roomId: string,
+        accessToken: string
     }
 }
 ```
